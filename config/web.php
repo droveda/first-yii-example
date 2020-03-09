@@ -53,6 +53,7 @@ $config = [
         
     ],
     'params' => $params,
+    'version' => '1.0',
 ];
 
 if (YII_ENV_DEV) {
