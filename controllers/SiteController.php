@@ -132,8 +132,10 @@ class SiteController extends Controller
         $obj = (object) array('company' => 'qualitypoint', 'area' => 'technologies', 'location' => 'India');
 
         return $this->render(
-            'say', ['message' => $message, 
-        'myObject' => $obj]
+            'say', 
+            [   'message' => $message, 
+                'myObject' => $obj,
+            ]
         );
     }
 
