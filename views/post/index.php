@@ -1,4 +1,8 @@
-<?php use yii\helpers\Html; ?>
+<?php 
+use yii\helpers\Html; 
+
+$this->title = 'Simple CRUD Example';
+?>
 
 <?php echo Html::a('Create new Post', array('post/create'), array('class' => 'btn btn-primary pull-right')); ?>
 

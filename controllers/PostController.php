@@ -5,7 +5,7 @@ namespace app\controllers;
 use yii\web\Controller;
 use app\models\Post;
 use Yii;
-use yii\web\HttpException;
+use yii\web\NotFoundHttpException;
 
 class PostController extends Controller {
 
@@ -67,9 +67,9 @@ class PostController extends Controller {
             //die();
             $model->save();
             Yii::$app->response->redirect(array('post/read', 'id' => $model->id));
+        } else {
+            return $this->render('create', array('model' => $model));
         }
-
-        return $this->render('create', array('model' => $model));
     }
 
     public function actionUpdate($id = NULL) {
@@ -82,9 +82,10 @@ class PostController extends Controller {
         if ($post->load(Yii::$app->request->post()) && $post->validate()) {
             $post->save();
             Yii::$app->response->redirect(array('post/read', 'id' => $post->id));
+        } else {
+            return $this->render('create', array('model' => $post));
         }
 
-        return $this->render('create', array('model' => $post));
     }
 
 }
