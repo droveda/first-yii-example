@@ -11,6 +11,17 @@ class PostController extends Controller {
 
     //tutorial from this site -> https://www.yiiframework.com/wiki/490/creating-a-simple-crud-app-with-yii2-revised-12202013?revision=2
 
+    public function behaviors() {
+
+        return [
+            [
+                'class' => 'app\components\ActionTimeFilter',
+                'only' => ['index']
+            ]
+        ];
+        
+    }
+
     public function actionIndex() {
         $data = Post::find()->all();
         return $this->render('index', ['data' => $data]);
