@@ -2,10 +2,14 @@
 
 namespace app\controllers;
 
+use app\components\Foo;
+use app\components\Player;
 use yii\web\Controller;
 use app\models\Post;
 use Yii;
+use yii\helpers\ArrayHelper;
 use yii\web\NotFoundHttpException;
+use yii\web\Response;
 
 class PostController extends Controller {
 
@@ -90,13 +94,49 @@ class PostController extends Controller {
             return;
         }
 
-        if ($post->load(Yii::$app->request->post()) && $post->validate()) {
+        $request = Yii::$app->request;
+
+        if ($post->load($request->post()) && $post->validate()) {
+
+            if (!$request->isPost) {
+                die('Method is not post');
+            }    
+
+            //echo "<pre>";
+            //var_dump($request->headers);
+            //echo "</pre>";
+            //die();
+            
             $post->save();
             Yii::$app->response->redirect(array('post/read', 'id' => $post->id));
         } else {
             return $this->render('create', array('model' => $post));
         }
 
+    }
+
+    public function actionInfo() {
+
+        $player = Yii::createObject(['class' => Player::className()]);
+        $player->name = ' Diegues ';
+
+        //print_r($player);
+
+        $foo = Yii::createObject(['class' => Foo::className()]);
+        $foo->on(Foo::EVENT_HELLO, function ($event) { 
+            echo "event called...\n";
+            echo $event->someMessage . "\n";
+        });
+
+        //$foo->bar(); #invocando o evento registrado
+
+
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        return [
+                'message' => 'Hello World!', 
+                'code' => 100,
+                'player' => $player,
+            ];
     }
 
 }
