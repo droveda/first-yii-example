@@ -1,6 +1,6 @@
 <?php
 
-return [
+$db = [
     'class' => 'yii\db\Connection',
     'dsn' => 'pgsql:host=localhost;port=5432;dbname=yii2basic',
     'username' => 'postgres',
@@ -12,3 +12,5 @@ return [
     //'schemaCacheDuration' => 60,
     //'schemaCache' => 'cache',
 ];
+
+return $db;

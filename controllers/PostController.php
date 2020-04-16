@@ -10,6 +10,8 @@ use Yii;
 use yii\helpers\ArrayHelper;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
+use app\models\UploadForm;
+use yii\web\UploadedFile;
 
 class PostController extends Controller {
 
@@ -120,7 +122,11 @@ class PostController extends Controller {
         $player = Yii::createObject(['class' => Player::className()]);
         $player->name = ' Diegues ';
 
-        //print_r($player);
+        $player2 = new Player();
+        $player2->setName('Diegues 2');
+        $player2->age = 40;
+
+        //print_r($player2);
 
         $foo = Yii::createObject(['class' => Foo::className()]);
         $foo->on(Foo::EVENT_HELLO, function ($event) { 
@@ -130,13 +136,44 @@ class PostController extends Controller {
 
         //$foo->bar(); #invocando o evento registrado
 
+        $post = new Post();
+        $posts = $post->myQueryAll();
+        //print_r($posts);
+
+        foreach ($posts as $p) {
+            foreach($p as $key => $value) {
+                //echo $key . " -> " . $value . "\n";
+            }
+            //echo "\n\n";
+        }
+
+        //echo "<pre>";
+        //print_r($post->exampleWithQueryBuilder());
+        //echo "</pre>";
+        //die();
+
 
         Yii::$app->response->format = Response::FORMAT_JSON;
         return [
                 'message' => 'Hello World!', 
                 'code' => 100,
                 'player' => $player,
+                'posts' => $posts,
             ];
+    }
+
+    public function actionUpload() {
+        $model = new UploadForm();
+
+        if (Yii::$app->request->isPost) {
+            $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
+            if ($model->validate() && $model->upload()) {
+                return;
+            }
+        }
+
+        return $this->render('myupload', array('model' => $model));
+
     }
 
 }
