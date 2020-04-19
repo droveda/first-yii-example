@@ -45,7 +45,9 @@ AppAsset::register($this);
             ['label' => 'Countries', 'url' => ['/country/index']],
             ['label' => 'Cakes', 'url' => ['/cakes/index']],
             ['label' => 'Posts', 'url' => ['/post/index']],
-            ['label' => 'Admin/Article', 'url' => ['/admin/article']],
+            
+            !Yii::$app->user->isGuest ? ['label' => 'Admin/Article', 'url' => ['/admin/article']] : '',
+            
             Yii::$app->user->isGuest ? (
                 ['label' => 'Login', 'url' => ['/site/login']]
             ) : (

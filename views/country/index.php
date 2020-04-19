@@ -1,6 +1,12 @@
 <?php
 use yii\helpers\Html;
 use yii\widgets\LinkPager;
+
+/**
+ * @var $this yii\web\View
+ * @var $sort yii\data\Sort
+ */
+
 ?>
 
 <h1>Countries</h1>
@@ -9,8 +15,8 @@ use yii\widgets\LinkPager;
 <table class="table table-striped">
     <thead>
         <tr>
-            <th>Country</th>
-            <th>Population</th>
+            <th><?=$sort->link('name')?></th>
+            <th><?=$sort->link('population')?></th>
             <th>Edit</th>
         </tr>
     </thead>
