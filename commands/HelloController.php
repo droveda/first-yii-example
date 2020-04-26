@@ -9,6 +9,7 @@ namespace app\commands;
 
 use yii\console\Controller;
 use yii\console\ExitCode;
+use yii\console\widgets\Table;
 
 /**
  * This command echoes the first argument that you have entered.
@@ -28,6 +29,14 @@ class HelloController extends Controller
     public function actionIndex($message = 'hello world')
     {
         echo $message . "\n";
+
+        echo Table::widget([
+            'headers' => ['Project', 'Status', 'Participant'],
+            'rows' => [
+                ['Yii', 'OK', '@samdark'],
+                ['Yii', 'OK', '@cebe'],
+            ],
+        ]);
 
         return ExitCode::OK;
     }

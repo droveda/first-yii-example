@@ -165,6 +165,8 @@ class PostController extends Controller {
     public function actionUpload() {
         $model = new UploadForm();
 
+        //Yii::$app->language = 'pt-BR';
+
         if (Yii::$app->request->isPost) {
             $model->imageFile = UploadedFile::getInstance($model, 'imageFile');
             if ($model->validate() && $model->upload()) {

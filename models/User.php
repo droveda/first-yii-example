@@ -3,8 +3,12 @@
 namespace app\models;
 
 use yii\db\ActiveRecord;
+use yii\web\Linkable;
+use yii\web\Link;
+use yii\helpers\Url;
+use yii\web\IdentityInterface;
 
-class User extends ActiveRecord implements \yii\web\IdentityInterface {
+class User extends ActiveRecord implements IdentityInterface, Linkable {
     
 
     public static function tableName() {
@@ -85,5 +89,22 @@ class User extends ActiveRecord implements \yii\web\IdentityInterface {
             return true;
         }
         return false;
+    }
+
+    public function fields() {
+        $fields = parent::fields();
+
+        unset($fields['password'], $fields['access_token'], $fields['access_token'], 
+            $fields['auth_key'], $fields['hash_control']);
+        return $fields;
+    }
+
+    /**
+     * @Override 
+     */
+    public function getLinks() {
+        return [
+            Link::REL_SELF => Url::to(['user/view', 'id' => $this->id], true),
+        ];
     }
 }
